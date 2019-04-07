@@ -39,7 +39,7 @@ public class Gui extends JFrame {
 
         allCounterList = new JList();
 
-        setSize(800,800);
+        setSize(1800,900);
         setLayout(new BorderLayout());
 
         JPanel panelFront = new JPanel();
@@ -51,11 +51,11 @@ public class Gui extends JFrame {
         panelFront.add(buttonFrontRegister);
         panelFront.add(buttonFrontLogin);
 
-        panelLogin.add(loginNameLabel);
-        panelLogin.add(registerNameLoginTextField);
-        panelLogin.add(loginPasswordLabel);
-        panelLogin.add(registerPassword);
-        panelLogin.add(buttonRegister);
+        panelRegister.add(loginNameLabel);
+        panelRegister.add(registerNameLoginTextField);
+        panelRegister.add(loginPasswordLabel);
+        panelRegister.add(registerPassword);
+        panelRegister.add(buttonRegister);
 
         panelLogin.add(registerNameLabel);
         panelLogin.add(loginNameTextField);
@@ -67,6 +67,7 @@ public class Gui extends JFrame {
         panelEast.setVisible(false);
         panelWest.setVisible(false);
         panelLogin.setVisible(false);
+        panelRegister.setVisible(false);
 
         panelWest.add(firstNameLabel);
         panelWest.add(firstNameTextField);
@@ -84,32 +85,25 @@ public class Gui extends JFrame {
 
         panelEast.add(allCounterList);
 
-        add(panelLogin,BorderLayout.CENTER);
+        add(panelLogin,BorderLayout.LINE_START);
 
-        panelLogin.setLayout(new FlowLayout());
+        add(panelRegister, BorderLayout.LINE_END);
 
-        add(panelWest, BorderLayout.WEST);
+        add(panelWest, BorderLayout.PAGE_START);
 
-        panelEast.setLayout(new GridLayout(1,1));
-
-        add(panelEast, BorderLayout.EAST);
-
-        panelWest.setLayout(new GridLayout(8,1));
+        add(panelEast, BorderLayout.PAGE_END);
 
         add(panelFront, BorderLayout.CENTER);
-
-        panelFront.setLayout(new FlowLayout());
-
-        add(panelRegister, BorderLayout.CENTER);
-
-        panelRegister.setLayout(new FlowLayout());
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        GuiBack guiBack = new GuiBack(firstNameTextField, lastNameTextField, counterNumberTextField, counterCountTextField, registerNameLoginTextField,allCounterList, buttonEnter, buttonRegister,buttonLogin, panelWest, panelEast, panelLogin, registerPassword);
+        GuiBack guiBack = new GuiBack(firstNameTextField, lastNameTextField, counterNumberTextField, counterCountTextField, registerNameLoginTextField,allCounterList, buttonEnter, buttonRegister,buttonLogin, buttonFrontLogin, buttonFrontRegister, panelWest, panelEast, panelLogin, panelRegister, panelFront, registerPassword);
         buttonEnter.addActionListener(guiBack);
         buttonRegister.addActionListener(guiBack);
+        buttonLogin.addActionListener(guiBack);
+        buttonFrontRegister.addActionListener(guiBack);
+        buttonFrontLogin.addActionListener(guiBack);
     }
 
 
