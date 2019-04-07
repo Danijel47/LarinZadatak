@@ -1,5 +1,3 @@
-import sun.rmi.runtime.Log;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,23 +7,24 @@ import java.util.Vector;
 
 public class GuiBack implements ActionListener {
 
-    private JTextField firstNameTextField, lastNameTextField, counterCountTextField, counterNumberTextField, nameLoginTextField;
+    private JTextField firstNameTextField, lastNameTextField, counterCountTextField, counterNumberTextField, registerNameLoginTextField;
     private JList allCounterList;
-    private JButton buttonEnter, buttonLogin;
+    private JButton buttonEnter, buttonRegister, buttonLogin;
     private Product product;
-    private Login login;
+    private Register register;
     private SqlConnection sqlConnection;
     private JPanel panelWest, panelEast, panelLogin;
     private JPasswordField passwordField;
 
-    public GuiBack(JTextField firstNameTextField, JTextField lastNameTextField, JTextField counterCountTextField, JTextField counterNumberTextField, JTextField nameLoginTextField, JList allCounterList, JButton buttonEnter, JButton buttonLogin, JPanel panelWest, JPanel panelEast, JPanel panelLogin, JPasswordField passwordField) {
+    public GuiBack(JTextField firstNameTextField, JTextField lastNameTextField, JTextField counterCountTextField, JTextField counterNumberTextField, JTextField registerNameLoginTextField, JList allCounterList, JButton buttonEnter, JButton buttonRegister, JButton buttonLogin, JPanel panelWest, JPanel panelEast, JPanel panelLogin, JPasswordField passwordField) {
         this.firstNameTextField = firstNameTextField;
         this.lastNameTextField = lastNameTextField;
         this.counterCountTextField = counterCountTextField;
         this.counterNumberTextField = counterNumberTextField;
-        this.nameLoginTextField = nameLoginTextField;
+        this.registerNameLoginTextField = registerNameLoginTextField;
         this.allCounterList = allCounterList;
         this.buttonEnter = buttonEnter;
+        this.buttonRegister = buttonRegister;
         this.buttonLogin = buttonLogin;
         this.panelWest = panelWest;
         this.panelEast = panelEast;
@@ -33,14 +32,18 @@ public class GuiBack implements ActionListener {
         this.passwordField = passwordField;
     }
 
-    public void buttonLoginGui(){
-        login = new Login();
+    public void buttonFrontRegisterGui(){
+
+    }
+
+    public void buttonRegisterGui(){
+        register = new Register();
         sqlConnection = new SqlConnection("counter", "root","");
         setLogin();
-        Vector<Login> allLoginListVector = login.getLogin(sqlConnection);
+        Vector<Register> allRegisterListVector = register.getLogin(sqlConnection);
         DefaultListModel list = new DefaultListModel();
-        for (int i = 0; i < allLoginListVector.size(); i++){
-            list.addElement(allLoginListVector.get(i).printLogin());
+        for (int i = 0; i < allRegisterListVector.size(); i++){
+            list.addElement(allRegisterListVector.get(i).printLogin());
         }
 
         panelLogin.setVisible(false);
@@ -74,10 +77,10 @@ public class GuiBack implements ActionListener {
     }
 
     public void setLogin(){
-        login.setLoginName(nameLoginTextField.getText());
-        login.setPassword(passwordField.getText());
+        register.setLoginName(registerNameLoginTextField.getText());
+        register.setPassword(passwordField.getText());
         sqlConnection.connect();
-        login.setLogin(sqlConnection, login);
+        register.setLogin(sqlConnection, register);
     }
 
 
@@ -87,8 +90,8 @@ public class GuiBack implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
-        if(src == buttonLogin){
-            buttonLoginGui();
+        if(src == buttonRegister){
+            buttonRegisterGui();
         }else if (src == buttonEnter){
             buttonEnterGui();
         }
