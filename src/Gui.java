@@ -98,7 +98,7 @@ public class Gui extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        GuiBack guiBack = new GuiBack(firstNameTextField, lastNameTextField, counterNumberTextField, counterCountTextField, registerNameLoginTextField,allCounterList, buttonEnter, buttonRegister,buttonLogin, buttonFrontLogin, buttonFrontRegister, panelWest, panelEast, panelLogin, panelRegister, panelFront, registerPassword);
+        GuiBack guiBack = new GuiBack(firstNameTextField, lastNameTextField, counterNumberTextField, counterCountTextField, registerNameLoginTextField, loginNameTextField, allCounterList, buttonEnter, buttonRegister,buttonLogin, buttonFrontLogin, buttonFrontRegister, panelWest, panelEast, panelLogin, panelRegister, panelFront, registerPassword, loginPassword);
         buttonEnter.addActionListener(guiBack);
         buttonRegister.addActionListener(guiBack);
         buttonLogin.addActionListener(guiBack);

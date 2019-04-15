@@ -1,13 +1,15 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 public class GuiBack implements ActionListener {
 
-    private JTextField firstNameTextField, lastNameTextField, counterCountTextField, counterNumberTextField, registerNameLoginTextField;
+    private JTextField firstNameTextField, lastNameTextField, counterCountTextField, counterNumberTextField,
+            registerNameLoginTextField, loginNameTextField;
     private JList allCounterList;
     private JButton buttonEnter, buttonRegister, buttonLogin, buttonFrontLogin, buttonFrontRegister;
     private Product product;
@@ -18,11 +20,13 @@ public class GuiBack implements ActionListener {
     private JPanel panelLogin;
     private JPanel panelRegister;
     private JPanel panelFront;
-    private JPasswordField passwordField;
+    private JPasswordField registerPassword, loginPassword;
 
-    public GuiBack(JTextField firstNameTextField, JTextField lastNameTextField, JTextField counterCountTextField, JTextField counterNumberTextField,
-                   JTextField registerNameLoginTextField, JList allCounterList, JButton buttonEnter, JButton buttonRegister, JButton buttonLogin,
-                   JButton buttonFrontLogin, JButton buttonFrontRegister, JPanel panelWest, JPanel panelEast, JPanel panelLogin,JPanel panelRegister, JPanel panelFront, JPasswordField passwordField) {
+    public GuiBack(JTextField firstNameTextField, JTextField lastNameTextField, JTextField counterCountTextField,
+                   JTextField counterNumberTextField, JTextField registerNameLoginTextField, JTextField loginNameTextField, JList allCounterList,
+                   JButton buttonEnter, JButton buttonRegister, JButton buttonLogin, JButton buttonFrontLogin,
+                   JButton buttonFrontRegister, JPanel panelWest, JPanel panelEast, JPanel panelLogin,
+                   JPanel panelRegister, JPanel panelFront, JPasswordField registerPassword, JPasswordField loginPassword) {
         this.firstNameTextField = firstNameTextField;
         this.lastNameTextField = lastNameTextField;
         this.counterCountTextField = counterCountTextField;
@@ -34,12 +38,14 @@ public class GuiBack implements ActionListener {
         this.buttonLogin = buttonLogin;
         this.buttonFrontLogin = buttonFrontLogin;
         this.buttonFrontRegister = buttonFrontRegister;
+        this.loginNameTextField = loginNameTextField;
         this.panelWest = panelWest;
         this.panelEast = panelEast;
         this.panelLogin = panelLogin;
         this.panelRegister = panelRegister;
         this.panelFront = panelFront;
-        this.passwordField = passwordField;
+        this.registerPassword = registerPassword;
+        this.loginPassword = loginPassword;
     }
 
     public void buttonFrontRegisterGui() {
@@ -55,18 +61,15 @@ public class GuiBack implements ActionListener {
     public void buttonRegisterGui() {
         register = new Register();
         sqlConnection = new SqlConnection("counter", "root", "");
-        setLogin();
+        setRegister();
         Vector<Register> allRegisterListVector = register.getLogin(sqlConnection);
         DefaultListModel list = new DefaultListModel();
         for (int i = 0; i < allRegisterListVector.size(); i++) {
             list.addElement(allRegisterListVector.get(i).printLogin());
         }
 
-        panelEast.setVisible(false);
-        panelWest.setVisible(false);
-        panelRegister.setVisible(false);
-        panelLogin.setVisible(false);
         panelFront.setVisible(true);
+        panelRegister.setVisible(false);
     }
 
     public void buttonEnterGui() {
@@ -94,19 +97,37 @@ public class GuiBack implements ActionListener {
 
     }
 
-    public void setLogin() {
+    public void setRegister() {
         register.setLoginName(registerNameLoginTextField.getText());
-        register.setPassword(passwordField.getText());
+        register.setPassword(registerPassword.getText());
         sqlConnection.connect();
         register.setLogin(sqlConnection, register);
     }
 
     public void buttonLoginGui() {
-        panelRegister.setVisible(false);
-        panelLogin.setVisible(false);
-        panelFront.setVisible(false);
-        panelWest.setVisible(true);
-        panelEast.setVisible(true);
+        PreparedStatement preparedStatement;
+        Connection connection;
+        JFrame frame = new JFrame();
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/counter",
+                    "root", "");
+            preparedStatement = connection.prepareStatement("SELECT login_name,password FROM counter_login WHERE login_name =? AND password =?");
+            preparedStatement.setString(1, loginNameTextField.getText());
+            preparedStatement.setString(2, String.valueOf(loginPassword.getText()));
+            ResultSet result = preparedStatement.executeQuery();
+            if (result.next()) {
+                panelRegister.setVisible(false);
+                panelLogin.setVisible(false);
+                panelFront.setVisible(false);
+                panelWest.setVisible(true);
+                panelEast.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Wrong name or password");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
     }
 
 
@@ -117,9 +138,9 @@ public class GuiBack implements ActionListener {
             buttonRegisterGui();
         } else if (src == buttonEnter) {
             buttonEnterGui();
-        } else if (src == buttonFrontRegister){
+        } else if (src == buttonFrontRegister) {
             buttonFrontRegisterGui();
-        } else if (src == buttonFrontLogin){
+        } else if (src == buttonFrontLogin) {
             buttonFrontLoginGui();
         } else if (src == buttonLogin) {
             buttonLoginGui();
