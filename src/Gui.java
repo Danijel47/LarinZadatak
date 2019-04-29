@@ -8,7 +8,7 @@ public class Gui extends JFrame {
     JButton buttonEnter, buttonRegister, buttonLogin, buttonFrontLogin, buttonFrontRegister;
     JPasswordField registerPassword, loginPassword;
 
-    public Gui(){
+    public Gui() {
 
         JFrame frame = new JFrame("Larin zadatak");
 
@@ -39,7 +39,7 @@ public class Gui extends JFrame {
 
         allCounterList = new JList();
 
-        setSize(1800,900);
+        setSize(1800, 900);
         setLayout(new BorderLayout());
 
         JPanel panelFront = new JPanel();
@@ -50,6 +50,7 @@ public class Gui extends JFrame {
 
         panelFront.add(buttonFrontRegister);
         panelFront.add(buttonFrontLogin);
+
 
         panelRegister.add(loginNameLabel);
         panelRegister.add(registerNameLoginTextField);
@@ -85,7 +86,7 @@ public class Gui extends JFrame {
 
         panelEast.add(allCounterList);
 
-        add(panelLogin,BorderLayout.LINE_START);
+        add(panelLogin, BorderLayout.LINE_START);
 
         add(panelRegister, BorderLayout.LINE_END);
 
@@ -98,7 +99,7 @@ public class Gui extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        GuiBack guiBack = new GuiBack(firstNameTextField, lastNameTextField, counterNumberTextField, counterCountTextField, registerNameLoginTextField, loginNameTextField, allCounterList, buttonEnter, buttonRegister,buttonLogin, buttonFrontLogin, buttonFrontRegister, panelWest, panelEast, panelLogin, panelRegister, panelFront, registerPassword, loginPassword);
+        GuiBack guiBack = new GuiBack(firstNameTextField, lastNameTextField, counterNumberTextField, counterCountTextField, registerNameLoginTextField, loginNameTextField, allCounterList, buttonEnter, buttonRegister, buttonLogin, buttonFrontLogin, buttonFrontRegister, panelWest, panelEast, panelLogin, panelRegister, panelFront, registerPassword, loginPassword);
         buttonEnter.addActionListener(guiBack);
         buttonRegister.addActionListener(guiBack);
         buttonLogin.addActionListener(guiBack);
@@ -106,7 +107,5 @@ public class Gui extends JFrame {
         buttonFrontLogin.addActionListener(guiBack);
     }
 
-
-    
 
 }
