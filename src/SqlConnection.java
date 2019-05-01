@@ -59,6 +59,18 @@ public class SqlConnection {
         return getDataQuery;
 
     }
+    public ArrayList<ArrayList<String>> getData(String query, ArrayList<String> params){
+        ArrayList<ArrayList<String>> getDataQuery = new ArrayList<ArrayList<String>>();
+
+        try
+        {
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return getDataQuery;
+    }
 
     public boolean setData(String query) {
         int updateQuery = 0;

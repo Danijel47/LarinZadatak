@@ -1,10 +1,14 @@
 import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GuiBack implements ActionListener {
 
@@ -85,6 +89,18 @@ public class GuiBack implements ActionListener {
     }
 
     public void setProduct() {
+        JFrame frame = new JFrame();
+
+        Pattern patternCounterNumber = Pattern.compile("^(?=.*[0-9]).*$");
+        Matcher matcherCounterNumber = patternCounterNumber.matcher(Character.getName(product.getCounterCode()));
+
+        boolean isCounterNumberValid = matcherCounterNumber.matches();
+        if (isCounterNumberValid) {
+
+        } else {
+            JOptionPane.showMessageDialog(frame, "Enter only digits");
+        }
+
         product.setFirstName(firstNameTextField.getText());
         product.setLastName(lastNameTextField.getText());
         product.setCounterCode(Integer.valueOf(counterNumberTextField.getText()));
@@ -98,10 +114,23 @@ public class GuiBack implements ActionListener {
     }
 
     public void setRegister() {
+        JFrame frame = new JFrame();
+
         register.setLoginName(registerNameLoginTextField.getText());
         register.setPassword(registerPassword.getText());
         sqlConnection.connect();
         register.setLogin(sqlConnection, register);
+
+        Pattern patternPassword = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$");
+        Matcher matcherPassword = patternPassword.matcher(register.getPassword());
+
+        boolean isPasswordValid = matcherPassword.matches();
+
+        if (isPasswordValid) {
+            JOptionPane.showMessageDialog(frame, "U have been registered");
+        } else {
+            JOptionPane.showMessageDialog(frame, "Enter your password with one uppercase and one number");
+        }
     }
 
     public void buttonLoginGui() {
