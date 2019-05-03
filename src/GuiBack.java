@@ -96,8 +96,8 @@ public class GuiBack implements ActionListener {
 
         boolean isCounterNumberValid = matcherCounterNumber.matches();
         if (isCounterNumberValid) {
-
-        } else {
+            JOptionPane.showMessageDialog(frame, "Your info has been entered");
+        }else{
             JOptionPane.showMessageDialog(frame, "Enter only digits");
         }
 
